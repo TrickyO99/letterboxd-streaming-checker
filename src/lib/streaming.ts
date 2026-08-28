@@ -12,11 +12,21 @@ const INCLUDED_OPTION_TYPES = new Set(["subscription", "free", "addon"]);
 type ShowResult = {
   title?: string;
   releaseYear?: number;
+  rating?: number;
+  genres?: { id?: string; name?: string }[];
+  imageSet?: { verticalPoster?: { w240?: string; w360?: string } };
   streamingOptions?: Record<string, StreamingOption[]>;
 };
 
+export type ShowInfo = {
+  serviceIds: string[];
+  posterUrl: string | null;
+  genres: string[];
+  rating: number | null;
+};
+
 // Cache is per server-instance / dev-session only; it resets on cold start.
-const cache = new Map<string, string[] | null>();
+const cache = new Map<string, ShowInfo | null>();
 
 function normalizeTitle(title: string): string {
   return title.toLowerCase().replace(/[^a-z0-9]+/g, "");
@@ -78,24 +88,30 @@ function extractServiceIds(show: ShowResult | null, country: string): string[] {
 }
 
 /**
- * Returns the list of streaming service ids that carry this film in the given
- * country, or null if the lookup failed (unknown, not "confirmed unavailable").
+ * Looks up a film's streaming availability plus display metadata (poster,
+ * genres, rating) in the given country, or null if the lookup failed
+ * (unknown, not "confirmed unavailable").
  */
-export async function getAvailableServiceIds(
+export async function getShowInfo(
   title: string,
   year: number | null,
   country: string,
   apiKey: string
-): Promise<string[] | null> {
+): Promise<ShowInfo | null> {
   const cacheKey = `${country}::${normalizeTitle(title)}::${year ?? ""}`;
   if (cache.has(cacheKey)) return cache.get(cacheKey)!;
 
   try {
     const results = await searchShowByTitle(title, country, apiKey);
     const match = pickBestMatch(results, title, year);
-    const ids = extractServiceIds(match, country);
-    cache.set(cacheKey, ids);
-    return ids;
+    const info: ShowInfo = {
+      serviceIds: extractServiceIds(match, country),
+      posterUrl: match?.imageSet?.verticalPoster?.w240 || match?.imageSet?.verticalPoster?.w360 || null,
+      genres: match?.genres?.map((g) => g.name).filter((n): n is string => Boolean(n)) || [],
+      rating: match?.rating ?? null,
+    };
+    cache.set(cacheKey, info);
+    return info;
   } catch {
     return null;
   }

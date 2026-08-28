@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { fetchWatchlist, LetterboxdError, WatchlistFilm } from "@/lib/letterboxd";
-import { getAvailableServiceIds, mapWithConcurrency } from "@/lib/streaming";
+import { getShowInfo, mapWithConcurrency } from "@/lib/streaming";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -12,6 +12,9 @@ type LookupResultFilm = {
   title: string;
   year: number | null;
   url: string | null;
+  posterUrl: string | null;
+  genres: string[];
+  rating: number | null;
 };
 
 export async function POST(req: NextRequest) {
@@ -78,14 +81,21 @@ export async function POST(req: NextRequest) {
   const unknown: LookupResultFilm[] = [];
 
   await mapWithConcurrency(filmsToCheck, CONCURRENCY, async (film) => {
-    const availableIds = await getAvailableServiceIds(film.title, film.year, country, apiKey);
-    const result: LookupResultFilm = { title: film.title, year: film.year, url: film.url };
+    const info = await getShowInfo(film.title, film.year, country, apiKey);
+    const result: LookupResultFilm = {
+      title: film.title,
+      year: film.year,
+      url: film.url,
+      posterUrl: info?.posterUrl ?? null,
+      genres: info?.genres ?? [],
+      rating: info?.rating ?? null,
+    };
 
-    if (availableIds === null) {
+    if (info === null) {
       unknown.push(result);
       return;
     }
-    const hasSelectedService = availableIds.some((id) => selectedSet.has(id));
+    const hasSelectedService = info.serviceIds.some((id) => selectedSet.has(id));
     if (!hasSelectedService) {
       notStreaming.push(result);
     }
