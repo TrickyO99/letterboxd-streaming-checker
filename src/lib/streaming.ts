@@ -2,7 +2,12 @@ const RAPIDAPI_HOST = "streaming-availability.p.rapidapi.com";
 
 type StreamingOption = {
   service?: { id?: string };
+  type?: "subscription" | "free" | "addon" | "buy" | "rent";
 };
+
+// "buy"/"rent" mean the film is purchasable there, not included with the subscription -
+// that's not what "is this on my streaming service" means, so those don't count as available.
+const INCLUDED_OPTION_TYPES = new Set(["subscription", "free", "addon"]);
 
 type ShowResult = {
   title?: string;
@@ -65,7 +70,9 @@ function extractServiceIds(show: ShowResult | null, country: string): string[] {
   const options = show.streamingOptions[country] || [];
   const ids = new Set<string>();
   for (const opt of options) {
-    if (opt.service?.id) ids.add(opt.service.id);
+    if (opt.service?.id && opt.type && INCLUDED_OPTION_TYPES.has(opt.type)) {
+      ids.add(opt.service.id);
+    }
   }
   return [...ids];
 }
