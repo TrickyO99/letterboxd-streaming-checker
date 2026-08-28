@@ -1,0 +1,31 @@
+export const STREAMING_SERVICES = [
+  { id: "netflix", label: "Netflix" },
+  { id: "prime", label: "Amazon Prime Video" },
+  { id: "disney", label: "Disney+" },
+  { id: "hbo", label: "Max (HBO)" },
+  { id: "hulu", label: "Hulu" },
+  { id: "apple", label: "Apple TV+" },
+  { id: "paramount", label: "Paramount+" },
+  { id: "peacock", label: "Peacock" },
+  { id: "starz", label: "Starz" },
+  { id: "showtime", label: "Showtime" },
+  { id: "mubi", label: "MUBI" },
+  { id: "britbox", label: "BritBox" },
+  { id: "crunchyroll", label: "Crunchyroll" },
+] as const;
+
+export const COUNTRIES = [
+  { code: "us", label: "United States" },
+  { code: "gb", label: "United Kingdom" },
+  { code: "ca", label: "Canada" },
+  { code: "au", label: "Australia" },
+  { code: "fr", label: "France" },
+  { code: "de", label: "Germany" },
+  { code: "es", label: "Spain" },
+  { code: "it", label: "Italy" },
+  { code: "in", label: "India" },
+  { code: "br", label: "Brazil" },
+  { code: "mx", label: "Mexico" },
+  { code: "nl", label: "Netherlands" },
+  { code: "se", label: "Sweden" },
+] as const;
