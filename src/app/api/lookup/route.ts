@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
   }
 
   const username = (body.username || "").trim();
-  const country = (body.country || "us").trim().toLowerCase();
+  const country = (body.country || "fr").trim().toLowerCase();
   const selectedServices = Array.isArray(body.services) ? body.services : [];
 
   if (!username) {

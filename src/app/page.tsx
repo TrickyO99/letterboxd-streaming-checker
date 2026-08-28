@@ -19,7 +19,7 @@ type LookupResponse = {
 
 export default function Home() {
   const [username, setUsername] = useState("");
-  const [country, setCountry] = useState("us");
+  const [country, setCountry] = useState("fr");
   const [services, setServices] = useState<string[]>(["netflix"]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
