@@ -133,22 +133,43 @@ export default function Home() {
   }, [result, sortBy, genreFilter, decadeFilter]);
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-black">
-      <main className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-6 py-16">
+    <div className="relative z-10 min-h-screen flex flex-col">
+      <header className="px-4 pt-6 sm:px-8">
+        <a
+          href="https://odtriki.com"
+          className="inline-flex items-center gap-2 font-serif text-sm font-semibold"
+          style={{ color: "var(--cream)" }}
+        >
+          <span aria-hidden className="inline-block h-2 w-2 rounded-[2px]" style={{ background: "var(--orange)" }} />
+          Othmane Triki
+        </a>
+      </header>
+
+      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-8 px-6 py-16">
         <div className="mx-auto flex w-full max-w-2xl flex-col gap-8">
-          <header className="flex flex-col gap-2">
-            <h1 className="text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
+          <div className="flex flex-col gap-2 text-center">
+            <p
+              className="inline-flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-[0.14em]"
+              style={{ color: "var(--orange-bright)" }}
+            >
+              <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5">
+                <rect x="2" y="4" width="18" height="13" rx="2" />
+                <polygon points="9,7.5 9,13.5 14.5,10.5" fill="currentColor" stroke="none" />
+              </svg>
+              Letterboxd, streamable
+            </p>
+            <h1 className="font-serif text-3xl sm:text-4xl font-semibold tracking-tight text-[var(--cream)]">
               Watchlist Gap Finder
             </h1>
-            <p className="text-zinc-600 dark:text-zinc-400">
+            <p className="text-[var(--muted)]">
               Enter a Letterboxd username to see which watchlist films aren&apos;t on your streaming
               services.
             </p>
-          </header>
+          </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
-              <label htmlFor="username" className="text-sm font-medium text-zinc-800 dark:text-zinc-200">
+              <label htmlFor="username" className="text-sm font-medium text-[var(--cream)]">
                 Letterboxd username
               </label>
               <input
@@ -158,19 +179,19 @@ export default function Home() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="e.g. deathproof"
-                className="rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900 outline-none focus:border-zinc-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
+                className="rounded-md border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-[var(--cream)] outline-none focus:border-primary dark:focus:border-primary-bright"
               />
             </div>
 
             <div className="flex flex-col gap-2">
-              <label htmlFor="country" className="text-sm font-medium text-zinc-800 dark:text-zinc-200">
+              <label htmlFor="country" className="text-sm font-medium text-[var(--cream)]">
                 Region
               </label>
               <select
                 id="country"
                 value={country}
                 onChange={(e) => handleCountryChange(e.target.value)}
-                className="rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900 outline-none focus:border-zinc-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
+                className="rounded-md border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-[var(--cream)] outline-none focus:border-primary dark:focus:border-primary-bright"
               >
                 {COUNTRIES.map((c) => (
                   <option key={c.code} value={c.code}>
@@ -181,19 +202,20 @@ export default function Home() {
             </div>
 
             <fieldset className="flex flex-col gap-2">
-              <legend className="text-sm font-medium text-zinc-800 dark:text-zinc-200">
+              <legend className="text-sm font-medium text-[var(--cream)]">
                 Your streaming services
               </legend>
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                 {availableServices.map((s) => (
                   <label
                     key={s.id}
-                    className="flex items-center gap-2 rounded-md border border-zinc-200 px-3 py-2 text-sm text-zinc-800 dark:border-zinc-800 dark:text-zinc-200"
+                    className="flex items-center gap-2 rounded-md border border-[var(--border)] px-3 py-2 text-sm text-[var(--cream)] transition-colors has-[:checked]:border-secondary has-[:checked]:bg-secondary/10 dark:has-[:checked]:border-secondary dark:has-[:checked]:bg-secondary/15"
                   >
                     <input
                       type="checkbox"
                       checked={services.includes(s.id)}
                       onChange={() => toggleService(s.id)}
+                      className="accent-primary"
                     />
                     {s.label}
                   </label>
@@ -204,14 +226,14 @@ export default function Home() {
             <button
               type="submit"
               disabled={loading}
-              className="rounded-md bg-zinc-900 px-4 py-2 font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+              className="rounded-full bg-primary px-4 py-2 font-semibold text-[var(--ink)] transition-colors hover:bg-primary-bright disabled:opacity-50"
             >
               {loading ? "Checking watchlist..." : "Find the gaps"}
             </button>
           </form>
 
           {error && (
-            <div className="rounded-md border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800 dark:border-red-900 dark:bg-red-950 dark:text-red-200">
+            <div className="rounded-md border border-[var(--danger)] bg-[var(--card)] px-4 py-3 text-sm text-[var(--danger)]">
               {error}
             </div>
           )}
@@ -219,7 +241,7 @@ export default function Home() {
 
         {result && (
           <div className="flex flex-col gap-6">
-            <div className="text-sm text-zinc-600 dark:text-zinc-400">
+            <div className="text-sm text-[var(--muted)]">
               Checked {result.checkedCount} of {result.totalInWatchlist} watchlist films.
               {result.truncated && (
                 <span> Only the first {result.checkedCount} were checked due to API limits.</span>
@@ -228,7 +250,7 @@ export default function Home() {
 
             <section className="flex flex-col gap-4">
               <div className="flex flex-wrap items-end justify-between gap-3">
-                <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+                <h2 className="text-lg font-semibold text-[var(--cream)]">
                   Not on your services ({filteredFilms.length}
                   {filteredFilms.length !== result.notStreaming.length ? ` of ${result.notStreaming.length}` : ""})
                 </h2>
@@ -238,7 +260,7 @@ export default function Home() {
                     <select
                       value={sortBy}
                       onChange={(e) => setSortBy(e.target.value as SortKey)}
-                      className="rounded-md border border-zinc-300 bg-white px-2 py-1.5 text-sm text-zinc-800 outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+                      className="rounded-md border border-[var(--border)] bg-[var(--card)] px-2 py-1.5 text-sm text-[var(--cream)] outline-none"
                     >
                       {SORT_OPTIONS.map((o) => (
                         <option key={o.value} value={o.value}>
@@ -250,7 +272,7 @@ export default function Home() {
                     <select
                       value={genreFilter}
                       onChange={(e) => setGenreFilter(e.target.value)}
-                      className="rounded-md border border-zinc-300 bg-white px-2 py-1.5 text-sm text-zinc-800 outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+                      className="rounded-md border border-[var(--border)] bg-[var(--card)] px-2 py-1.5 text-sm text-[var(--cream)] outline-none"
                     >
                       <option value="all">All genres</option>
                       {genres.map((g) => (
@@ -263,7 +285,7 @@ export default function Home() {
                     <select
                       value={decadeFilter}
                       onChange={(e) => setDecadeFilter(e.target.value)}
-                      className="rounded-md border border-zinc-300 bg-white px-2 py-1.5 text-sm text-zinc-800 outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+                      className="rounded-md border border-[var(--border)] bg-[var(--card)] px-2 py-1.5 text-sm text-[var(--cream)] outline-none"
                     >
                       <option value="all">All decades</option>
                       {decades.map((d) => (
@@ -277,11 +299,11 @@ export default function Home() {
               </div>
 
               {result.notStreaming.length === 0 ? (
-                <p className="text-zinc-600 dark:text-zinc-400">
+                <p className="text-[var(--muted)]">
                   Everything checked is available on your selected services.
                 </p>
               ) : filteredFilms.length === 0 ? (
-                <p className="text-zinc-600 dark:text-zinc-400">No films match these filters.</p>
+                <p className="text-[var(--muted)]">No films match these filters.</p>
               ) : (
                 <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
                   {filteredFilms.map((film, i) => (
@@ -290,7 +312,7 @@ export default function Home() {
                       href={film.url || undefined}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group relative flex aspect-[2/3] flex-col overflow-hidden rounded-md bg-zinc-200 shadow-sm transition-transform hover:scale-[1.03] dark:bg-zinc-800"
+                      className="group relative flex aspect-[2/3] flex-col overflow-hidden rounded-md bg-[var(--card)] shadow-sm transition-transform hover:scale-[1.03] hover:ring-2 hover:ring-primary-bright"
                     >
                       {film.posterUrl ? (
                         // eslint-disable-next-line @next/next/no-img-element
@@ -301,12 +323,12 @@ export default function Home() {
                           loading="lazy"
                         />
                       ) : (
-                        <div className="flex h-full w-full items-center justify-center p-2 text-center text-xs text-zinc-600 dark:text-zinc-400">
+                        <div className="flex h-full w-full items-center justify-center p-2 text-center text-xs text-[var(--muted)]">
                           {film.title}
                         </div>
                       )}
                       {film.rating !== null && (
-                        <span className="absolute right-1 top-1 rounded bg-black/70 px-1.5 py-0.5 text-[10px] font-medium text-white">
+                        <span className="absolute right-1 top-1 rounded bg-secondary px-1.5 py-0.5 text-[10px] font-medium text-[var(--ink)]">
                           {film.rating}
                         </span>
                       )}
@@ -324,12 +346,12 @@ export default function Home() {
 
             {result.unknown.length > 0 && (
               <section className="flex flex-col gap-3">
-                <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+                <h2 className="text-lg font-semibold text-[var(--cream)]">
                   Couldn&apos;t verify ({result.unknown.length})
                 </h2>
-                <ul className="flex flex-col divide-y divide-zinc-200 dark:divide-zinc-800">
+                <ul className="flex flex-col divide-y divide-[var(--border)]">
                   {result.unknown.map((film, i) => (
-                    <li key={i} className="py-2 text-zinc-800 dark:text-zinc-200">
+                    <li key={i} className="py-2 text-[var(--cream)]">
                       {film.title} {film.year ? `(${film.year})` : ""}
                     </li>
                   ))}
@@ -339,6 +361,17 @@ export default function Home() {
           </div>
         )}
       </main>
+
+      <footer
+        className="border-t px-4 py-8 text-center text-sm sm:px-8"
+        style={{ borderColor: "var(--border)", color: "var(--muted)", background: "rgba(15,25,90,0.35)" }}
+      >
+        <a href="https://odtriki.com" className="font-medium hover:text-[var(--orange-bright)]" style={{ color: "var(--cream)" }}>
+          odtriki.com
+        </a>
+        <span aria-hidden className="inline-block mx-2 h-1 w-1 rounded-[1px] align-middle" style={{ background: "var(--orange)" }} />
+        one of a few side projects
+      </footer>
     </div>
   );
 }

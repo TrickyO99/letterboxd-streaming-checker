@@ -1,26 +1,67 @@
 @import "tailwindcss";
 
+/* Same palette as odtriki.com — fixed dark, no light variant, to match. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+
+  --blue: #2547e6;
+  --blue-deep: #14257d;
+  --blue-bright: #5c7bff;
+  --orange: #ff6a1f;
+  --orange-bright: #ffb27a;
+  --cream: #fbf6ec;
+  --muted: #d2d9ff;
+  --ink: #10142c;
+  --card: rgba(255, 255, 255, 0.07);
+  --border: rgba(255, 255, 255, 0.18);
+
+  --background: var(--blue);
+  --foreground: var(--cream);
+
+  /* This app's own tokens — collapsed to the single orange brand accent
+     (odtriki.com uses orange as its one interactive/CTA color throughout). */
+  --primary: var(--orange);
+  --primary-bright: var(--orange-bright);
+  --secondary: var(--orange);
+  --secondary-bright: var(--orange-bright);
+
+  --danger: #ff6b6b;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-primary: var(--primary);
+  --color-primary-bright: var(--primary-bright);
+  --color-secondary: var(--secondary);
+  --color-secondary-bright: var(--secondary-bright);
+  --font-sans: var(--font-inter), ui-sans-serif, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: var(--font-fraunces), Georgia, serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), ui-sans-serif, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.55;
+}
+
+h1, h2, .serif {
+  font-family: var(--font-fraunces), Georgia, serif;
+}
+
+.brandbar {
+  height: 4px;
+  background: var(--orange);
+}
+
+.wash {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(52rem 46rem at 92% -6%, rgba(255, 106, 31, 0.42), transparent 52%),
+    radial-gradient(46rem 40rem at -8% 22%, rgba(92, 123, 255, 0.45), transparent 58%),
+    radial-gradient(60rem 55rem at 50% 120%, var(--blue-deep), transparent 62%);
 }
