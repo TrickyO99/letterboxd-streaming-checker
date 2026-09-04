@@ -3,7 +3,6 @@ import { fetchWatchlist, LetterboxdError, WatchlistFilm } from "@/lib/letterboxd
 import { getShowInfo, mapWithConcurrency } from "@/lib/streaming";
 
 export const runtime = "nodejs";
-export const maxDuration = 60;
 
 const DEFAULT_MAX_FILMS = 150;
 const CONCURRENCY = 4;

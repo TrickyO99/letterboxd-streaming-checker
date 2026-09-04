@@ -8,12 +8,13 @@
   --blue-deep: #14257d;
   --blue-bright: #5c7bff;
   --orange: #ff6a1f;
-  --orange-bright: #ffb27a;
   --cream: #fbf6ec;
   --muted: #d2d9ff;
   --ink: #10142c;
   --card: rgba(255, 255, 255, 0.07);
   --border: rgba(255, 255, 255, 0.18);
+  --glass-blur: blur(22px) saturate(160%);
+  --glass-shadow: inset 0 1px 0 rgba(255,255,255,0.25), inset 0 0 0 1px rgba(255,255,255,0.04), 0 12px 34px -14px rgba(8,14,60,0.55);
 
   --background: var(--blue);
   --foreground: var(--cream);
@@ -21,9 +22,9 @@
   /* This app's own tokens — collapsed to the single orange brand accent
      (odtriki.com uses orange as its one interactive/CTA color throughout). */
   --primary: var(--orange);
-  --primary-bright: var(--orange-bright);
+  --primary-bright: var(--orange);
   --secondary: var(--orange);
-  --secondary-bright: var(--orange-bright);
+  --secondary-bright: var(--orange);
 
   --danger: #ff6b6b;
 }
@@ -36,7 +37,7 @@
   --color-secondary: var(--secondary);
   --color-secondary-bright: var(--secondary-bright);
   --font-sans: var(--font-inter), ui-sans-serif, -apple-system, "Segoe UI", sans-serif;
-  --font-serif: var(--font-fraunces), Georgia, serif;
+  --font-serif: var(--font-prata), Georgia, serif;
 }
 
 body {
@@ -47,7 +48,7 @@ body {
 }
 
 h1, h2, .serif {
-  font-family: var(--font-fraunces), Georgia, serif;
+  font-family: var(--font-prata), Georgia, serif;
 }
 
 .brandbar {
