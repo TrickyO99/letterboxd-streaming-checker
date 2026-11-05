@@ -134,16 +134,6 @@ export default function Home() {
 
   return (
     <div className="relative z-10 min-h-screen flex flex-col">
-      <header className="px-4 pt-6 sm:px-8">
-        <a
-          href="https://odtriki.com"
-          className="inline-flex items-center gap-2 font-serif text-sm font-semibold"
-          style={{ color: "var(--cream)" }}
-        >
-          <span aria-hidden className="inline-block h-2 w-2 rounded-[2px]" style={{ background: "var(--orange)" }} />
-          Othmane Triki
-        </a>
-      </header>
 
       <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-8 px-6 py-16">
         <div className="mx-auto flex w-full max-w-2xl flex-col gap-8">
@@ -361,17 +351,6 @@ export default function Home() {
           </div>
         )}
       </main>
-
-      <footer
-        className="border-t px-4 py-8 text-center text-sm sm:px-8"
-        style={{ borderColor: "var(--border)", color: "var(--muted)", background: "rgba(15,25,90,0.35)" }}
-      >
-        <a href="https://odtriki.com" className="font-medium hover:text-[var(--orange)]" style={{ color: "var(--cream)" }}>
-          odtriki.com
-        </a>
-        <span aria-hidden className="inline-block mx-2 h-1 w-1 rounded-[1px] align-middle" style={{ background: "var(--orange)" }} />
-        one of a few side projects
-      </footer>
     </div>
   );
 }
