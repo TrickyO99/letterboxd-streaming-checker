@@ -68,7 +68,7 @@ export default function Home() {
     setDecadeFilter("all");
 
     try {
-      const res = await fetch("/api/lookup", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/api/lookup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, country, services }),
